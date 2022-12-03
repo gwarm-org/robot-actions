@@ -5969,9 +5969,7 @@ dotenv.config();
         //   console.log(result);
         module.enableShutdownHooks();
         yield module.close();
-        setInterval(() => {
-          console.log("Ping after 5s");
-        }, 5000);
+        process.exit(0);
       });
     }
     run();
