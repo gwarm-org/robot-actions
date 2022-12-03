@@ -1,1 +1,8 @@
-{}
+{
+  "action": "AUTHENTICATION",
+  "email": {
+    "email": "",
+    "password": "",
+    "confirmationEmail": ""
+  }
+}
