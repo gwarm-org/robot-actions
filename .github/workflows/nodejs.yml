@@ -24,5 +24,7 @@ jobs:
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm install
+      - name: Setup playwright
+        run: npx playwright install
       - name: Run Task
         run: node main.js
