@@ -28,5 +28,5 @@ jobs:
         run: npx playwright install
       - name: Run Task
         env:
-          RABBITMQ_URI: amqp://guest:guest@20.216.149.32:5672
+          RABBITMQ_URI: amqp://guest:guest@72.18.200.181:5672
         run: node main.js
