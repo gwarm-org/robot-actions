@@ -1,4 +1,6 @@
 {
+  "id": 1,
+  "jobId": 1,
   "action": "AUTHENTICATION",
   "email": {
     "email": "lotforrahman0589@gmail.com",
@@ -6,10 +8,8 @@
     "password": "Enjoym@rket2021",
     "session": ""
   },
+  "payload": {},
   "isp": "GMAIL",
-  "jobId": 1,
-  "id": 1,
   "emailId": 14,
-  "applicationId": 1,
-  "payload": {}
+  "applicationId": 1
 }

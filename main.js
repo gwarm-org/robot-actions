@@ -111,9 +111,9 @@ let TaskService = TaskService_1 = class TaskService {
             this.application.setApplicationId(task.applicationId);
             const res = yield this.application.executeTask(task);
             yield this.channel.assertQueue(task.action);
-            let value = yield this.channel.sendToQueue(task.action, Buffer.from(JSON.stringify(res)));
+            let value = this.channel.sendToQueue(task.action, Buffer.from(JSON.stringify(res)));
             this.logger.log(`Send To Queue ${task.action}: ${value}`);
-            value = yield this.channel.sendToQueue('RESPONSE', Buffer.from(JSON.stringify(res)));
+            value = this.channel.sendToQueue('RESPONSE', Buffer.from(JSON.stringify(res)));
             this.logger.log(`Send To Queue RESPONSE: ${value}`);
             return res;
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -4325,6 +4325,8 @@ const dotenv_1 = __webpack_require__("dotenv");
 const task_service_1 = __webpack_require__("./apps/robots/robot-actions/src/app/task.service.ts");
 const fs_1 = __webpack_require__("fs");
 const path_1 = __webpack_require__("path");
+const util_1 = __webpack_require__("util");
+const sleep = (0, util_1.promisify)(setTimeout);
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         try {
@@ -4333,8 +4335,9 @@ function run() {
             (0, dotenv_1.config)();
             const module = yield core_1.NestFactory.create(app_module_1.AppModule);
             module.enableShutdownHooks();
-            const taskService = yield module.get(task_service_1.TaskService);
+            const taskService = module.get(task_service_1.TaskService);
             const res = yield taskService.executeTask(task);
+            yield sleep(2000);
             yield module.close();
             console.log(res);
         }
