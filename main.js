@@ -109,22 +109,14 @@ let TaskService = TaskService_1 = class TaskService {
     executeTask(task) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             this.application.setApplicationId(task.applicationId);
-            try {
-                const res = yield this.application.executeTask(task);
-                yield this.channel.assertQueue(task.action);
-                let value = yield this.channel.sendToQueue(task.action, Buffer.from(JSON.stringify(res)));
-                this.logger.log(`Send To Queue ${task.action}: ${value}`);
-                value = yield this.channel.sendToQueue('RESPONSE', Buffer.from(JSON.stringify(res)));
-                this.logger.log(`Send To Queue RESPONSE: ${value}`);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            }
-            catch (err) {
-                yield this.channel.sendToQueue('UNDO', Buffer.from(JSON.stringify({
-                    task,
-                    error: err.message,
-                })));
-            }
-            return task;
+            const res = yield this.application.executeTask(task);
+            yield this.channel.assertQueue(task.action);
+            let value = yield this.channel.sendToQueue(task.action, Buffer.from(JSON.stringify(res)));
+            this.logger.log(`Send To Queue ${task.action}: ${value}`);
+            value = yield this.channel.sendToQueue('RESPONSE', Buffer.from(JSON.stringify(res)));
+            this.logger.log(`Send To Queue RESPONSE: ${value}`);
+            return res;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         });
     }
     stopTaskById(id) {
@@ -4342,8 +4334,9 @@ function run() {
             const module = yield core_1.NestFactory.create(app_module_1.AppModule);
             module.enableShutdownHooks();
             const taskService = yield module.get(task_service_1.TaskService);
-            yield taskService.executeTask(task);
+            const res = yield taskService.executeTask(task);
             yield module.close();
+            console.log(res);
         }
         catch (e) {
             console.error('Can Not Parse Task', e);
