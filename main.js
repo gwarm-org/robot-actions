@@ -4328,7 +4328,7 @@ const path_1 = __webpack_require__("path");
 function run() {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
         try {
-            const task = JSON.parse((0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'assets', 'task.json'), 'utf8'));
+            const task = JSON.parse((0, fs_1.readFileSync)((0, path_1.join)(__dirname, 'assets', 'task.json')).toString());
             console.log(task);
             (0, dotenv_1.config)();
             const module = yield core_1.NestFactory.create(app_module_1.AppModule);

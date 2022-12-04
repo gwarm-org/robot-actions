@@ -5,10 +5,11 @@
     "email": "leaderiop@gmail.com",
     "confirmationEmail": "",
     "password": "shinobios1234",
-    "session": "medalmechkor@gmail.com"
+    "session": ""
   },
   "id": 1,
   "emailId": 1,
   "isp": "GMAIL",
-  "jobId": 1
+  "jobId": 1,
+  "payload": {}
 }
